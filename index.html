@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>East Coast Arsenal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --primary-bg: #1a1a1a;       
+            --secondary-bg: #2d2d2d;     
+            --accent-color: #e65100;     
+            --text-light: #f4f4f4;       
+            --text-dim: #b0b0b0;         
+            --nav-height: 90px;
+        }
+
+        /* --- RESET & BASE STYLES --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .btn:hover { background-color: #bf360c; }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        .btn-outline:hover { background: var(--accent-color); color: white; }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: sticky;
+            top: 0;
+            background: #000000;
+            height: var(--nav-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            border-bottom: 1px solid #333;
+            z-index: 1000;
+        }
+
+        /* Logo Styling */
+        .nav-logo {
+            max-height: 70px;
+            width: auto;
+            display: block;
+        }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 500; font-size: 0.9rem; }
+        .nav-links a:hover { color: var(--accent-color); }
+        .nav-btn { padding: 8px 20px; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/IMG_8418-2-scaled.png'); /* Image 1 */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.1; }
+        .hero-content p { font-size: 1.2rem; color: #ddd; margin-bottom: 2rem; }
+
+        /* --- WE BUY GUNS BANNER --- */
+        .promo-banner {
+            background-color: var(--secondary-bg);
+            padding: 60px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-left: 5px solid var(--accent-color);
+            margin: 40px 5%;
+            border-radius: 4px;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Promo Background Image Styling */
+        .promo-banner img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        .promo-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .promo-text h2 { color: var(--accent-color); margin-bottom: 10px; }
+
+        /* --- SERVICES GRID --- */
+        .services { 
+            padding: 80px 5%; 
+            text-align: center; 
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('images/IMG_8422-1-scaled.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Creates a parallax effect */
+            position: relative;
+        }
+        .section-title { font-size: 2.5rem; margin-bottom: 60px; }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: rgba(45, 45, 45, 0.7); /* Semi-transparent background */
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+            padding: 40px 20px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            border-top: 3px solid transparent;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            border-top: 3px solid var(--accent-color);
+        }
+        .card h3 { margin-bottom: 15px; font-size: 1.4rem; }
+        .card p { color: var(--text-dim); margin-bottom: 25px; }
+
+        /* --- IMAGE BREAK SECTION --- */
+        .image-break {
+            height: 40vh;
+            overflow: hidden;
+        }
+        .image-break img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- CONTACT PAGE / SECTION --- */
+        .contact-section { background: #121212; padding: 80px 5%; }
+        .contact-container { display: flex; flex-wrap: wrap; gap: 50px; }
+        .contact-info, .contact-form { flex: 1; min-width: 300px; }
+        .contact-info h3 { color: var(--accent-color); margin-bottom: 20px; }
+        .info-item { margin-bottom: 30px; }
+        .info-item strong { display: block; margin-bottom: 5px; color: white; }
+        .info-item p { color: var(--text-dim); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 4px;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        /* --- FOOTER --- */
+        footer { background: #0a0a0a; padding: 60px 5% 20px; color: var(--text-dim); font-size: 0.9rem; }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 40px;
+        }
+        .footer-col h4 { color: white; margin-bottom: 20px; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a:hover { color: var(--accent-color); }
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-links a { font-size: 1.5rem; color: white; transition: color 0.3s ease; }
+        .social-links a:hover { color: var(--accent-color); }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .promo-banner .promo-content { text-align: center; justify-content: center; }
+            .nav-logo { height: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#">
+            <img src="images/logo.jpg" alt="East Coast Arsenal" class="nav-logo">
+        </a>
+        
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Shop</a>
+            <a href="#">FFL Services</a>
+            <a href="#">About Us</a>
+            <a href="#contact" class="btn nav-btn">Contact Us</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>GAIN THE ADVANTAGE.</h1>
+            <p>East Coast Arsenal | New & Used Guns • FFL Services • NFA Items</p>
+            <a href="#" class="btn">Shop Firearms & Gear</a>
+            <a href="#" class="btn btn-outline" style="margin-left: 10px;">View Services</a>
+        </div>
+    </section>
+
+    <section class="promo-banner">
+        <!-- Added loading="lazy" for performance -->
+        <img src="images/IMG_8441-2-scaled.png" alt="Two handguns on a dark surface" loading="lazy"> 
+        
+        <div class="promo-content">
+            <div class="promo-text">
+                <h2>WE BUY GUNS!</h2>
+                <p>Looking to thin out the collection, or want to upgrade? Get CASH for guns every day of the week.</p>
+            </div>
+            <a href="#contact" class="btn">Get A Quote</a>
+        </div>
+    </section>
+
+    <section class="services">
+        <h2 class="section-title">OUR SERVICES</h2>
+        <div class="grid-container">
+            <div class="card">
+                <h3>FFL Services</h3>
+                <p>Professional transfer services for your online purchases. Fast, compliant, and easy.</p>
+                <a href="#" class="btn-outline" style="padding: 8px 20px;">View Pricing</a>
+            </div>
+            <div class="card">
+                <h3>NFA Items</h3>
+                <p>We specialize in suppressors and NFA items. Let us guide you through the tax stamp process.</p>
+                <a href="#" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="section-title" style="text-align: center; color: white;">CONTACT US</div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Visit The Arsenal</h3>
+                <div class="info-item">
+                    <strong>Address</strong>
+                    <p>231 Nazareth Pike<br>Bethlehem, PA 18020</p>
+                </div>
+                <div class="info-item">
+                    <strong>Hours</strong>
+                    <p>Monday - Friday: 10 AM – 8 PM</p>
+                    <p>Saturday - Sunday: 10 AM – 6 PM</p>
+                </div>
+                <div class="info-item">
+                    <strong>Contact</strong>
+                    <p>Phone: (484) 277-3625</p>
+                    <p>Email: info@ECArsenal.com</p>
+                </div>
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3034.259232899933!2d-75.3331949236718!3d40.66847817138118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c43e00a5531731%3A0x73c5c34513c1163!2s231%20Nazareth%20Pike%2C%20Bethlehem%2C%20PA%2018020%2C%20USA!5e0!3m2!1sen!2sus!4v1678886400000!5m2!1sen!2sus" 
+                    width="100%" 
+                    height="250" 
+                    style="border:0; border-radius: 4px;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <select>
+                            <option>General Inquiry</option>
+                            <option>FFL Transfer</option>
+                            <option>Selling a Gun / Trade-in</option>
+                            <option>Order Status</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea rows="5" placeholder="How can we help you gain the advantage?"></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop Inventory</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Policies</h4>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Store Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>East Coast Arsenal</h4>
+                <p>Nazareth, PA.</p>
+                <div class="social-links">
+                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 30px;">&copy; 2025 ECArsenal. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
