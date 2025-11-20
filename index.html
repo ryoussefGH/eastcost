@@ -81,6 +81,21 @@
         .nav-links a:hover { color: var(--accent-color); }
         .nav-btn { padding: 8px 20px; }
 
+        /* Header Social Links */
+        .header-social-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: 30px;
+        }
+        .header-social-links a {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+        }
+        .header-social-links a:hover {
+            color: var(--accent-color);
+        }
+
         /* --- HERO SECTION --- */
         .hero {
             height: 90vh;
@@ -221,6 +236,7 @@
             margin-bottom: 60px;
             padding-bottom: 40px;
             border-bottom: 1px solid #444;
+            scroll-margin-top: 110px; /* Offset for sticky nav */
         }
         .policy-content:last-child {
             margin-bottom: 0;
@@ -326,6 +342,7 @@
 
             /* --- Mobile Nav --- */
             .mobile-menu-toggle { display: block; }
+            .header-social-links { display: none; } /* Hide on mobile */
             .nav-links {
                 display: flex;
                 flex-direction: column;
@@ -415,6 +432,10 @@
                 <a href="#services">FFL Services</a>
                 <a href="#about">About Us</a>
                 <a href="#contact" class="btn nav-btn">Contact Us</a>
+            </div>
+            <div class="header-social-links">
+                <a href="https://www.facebook.com/ECArsenal/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/eastcoastarsenal/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
             <button class="mobile-menu-toggle" aria-label="Open navigation menu">
                 <i class="fas fa-bars"></i>
