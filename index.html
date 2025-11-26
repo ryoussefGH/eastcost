@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>East Coast Arsenal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -16,6 +16,7 @@
             --text-light: #f4f4f4;       
             --text-dim: #b0b0b0;         
             --nav-height: 90px;
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         /* --- RESET & BASE STYLES --- */
@@ -25,14 +26,65 @@
             background-color: var(--primary-bg);
             color: var(--text-light);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         h1, h2, h3, h4 {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
         ul { list-style: none; }
+
+        /* --- FADE IN ANIMATION --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(211, 47, 47, 0.3), 0 0 40px rgba(211, 47, 47, 0.2); }
+            50% { text-shadow: 0 0 30px rgba(211, 47, 47, 0.6), 0 0 60px rgba(211, 47, 47, 0.4); }
+        }
+
+        @keyframes rotate-border {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes slide-in-left {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slide-in-right {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Scroll Animation Utility */
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s var(--transition) forwards;
+        }
 
         /* --- BUTTONS --- */
         .btn {
@@ -46,42 +98,79 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.2);
+            transition: var(--transition);
         }
-        .btn:hover { background-color: #b71c1c; }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left var(--transition);
+        }
+        .btn:hover {
+            background-color: #b71c1c;
+            box-shadow: 0 8px 25px rgba(211, 47, 47, 0.4);
+            transform: translateY(-2px);
+        }
+        .btn:hover::before { left: 100%; }
+        
         .btn-outline {
             background: transparent;
             border: 2px solid var(--accent-color);
             color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(211, 47, 47, 0.1);
         }
-        .btn-outline:hover { background: var(--accent-color); color: white; }
+        .btn-outline:hover {
+            background: var(--accent-color);
+            color: white;
+            box-shadow: 0 0 30px rgba(211, 47, 47, 0.4);
+        }
 
         /* --- NAVIGATION --- */
         nav {
             position: sticky;
             top: 0;
-            background: #000000;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
             height: var(--nav-height);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.2);
             z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
-        /* Logo Styling */
         .nav-logo {
             max-height: 80px;
             width: auto;
             display: block;
+            transition: var(--transition);
         }
+        .nav-logo:hover { transform: scale(1.05); }
 
         .nav-links { display: flex; gap: 30px; }
-        .nav-links a { font-weight: 500; font-size: 0.9rem; }
-        .nav-links a:hover { color: var(--accent-color); }
+        .nav-links a { font-weight: 500; font-size: 0.9rem; position: relative; }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width var(--transition);
+        }
+        .nav-links a:hover::after { width: 100%; }
         .nav-btn { padding: 8px 20px; }
 
-        /* Header Social Links */
         .header-social-links {
             display: flex;
             align-items: center;
@@ -91,41 +180,79 @@
         .header-social-links a {
             font-size: 1.3rem;
             color: var(--text-dim);
+            transition: var(--transition);
         }
         .header-social-links a:hover {
             color: var(--accent-color);
+            transform: translateY(-3px);
         }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION (PARALLAX) --- */
         .hero {
-            height: 90vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('IMG_8418-2-scaled.png'); /* Image 1 */
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('IMG_8418-2-scaled.png');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        .hero-content h1 { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.1; }
-        .hero-content p { font-size: 1.2rem; color: #ddd; margin-bottom: 2rem; }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s var(--transition);
+        }
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            animation: glow-pulse 3s ease-in-out infinite;
+            font-weight: 900;
+            letter-spacing: 3px;
+        }
+        .hero-content p {
+            font-size: 1.3rem;
+            color: #ddd;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s var(--transition) 0.2s backwards;
+        }
+        .hero-content .btn {
+            animation: fadeInUp 1s var(--transition) 0.4s backwards;
+        }
 
         /* --- WE BUY GUNS BANNER --- */
         .promo-banner {
-            background-color: var(--secondary-bg);
-            padding: 60px 5%;
+            background: rgba(45, 45, 45, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 80px 5%;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-left: 5px solid var(--accent-color);
+            border-top: 1px solid rgba(211, 47, 47, 0.2);
+            border-bottom: 1px solid rgba(211, 47, 47, 0.2);
             margin: 40px 5%;
             border-radius: 4px;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 40px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 32px rgba(211, 47, 47, 0.1);
         }
-        /* Promo Background Image Styling */
         .promo-banner img {
             position: absolute;
             top: 0;
@@ -134,7 +261,7 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-            opacity: 0.2;
+            opacity: 0.15;
             z-index: 0;
         }
         .promo-content {
@@ -145,40 +272,102 @@
             justify-content: space-between;
             width: 100%;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 40px;
         }
-        .promo-text h2 { color: var(--accent-color); margin-bottom: 10px; }
+        .promo-text h2 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        .promo-text p {
+            font-size: 1.1rem;
+            max-width: 500px;
+        }
 
         /* --- SERVICES GRID --- */
-        .services { 
-            padding: 80px 5%; 
-            text-align: center; 
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('IMG_8422-1-scaled.png');
+        .services {
+            padding: 100px 5%;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('IMG_8422-1-scaled.png');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Creates a parallax effect */
+            background-attachment: fixed;
             position: relative;
         }
-        .section-title { font-size: 2.5rem; margin-bottom: 60px; }
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(211, 47, 47, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s var(--transition);
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            margin: 20px auto 0;
+        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            gap: 40px;
+            position: relative;
+            z-index: 1;
         }
         .card {
-            background: rgba(45, 45, 45, 0.7); /* Semi-transparent background */
-            backdrop-filter: blur(5px); /* Frosted glass effect */
-            padding: 40px 20px;
+            background: rgba(45, 45, 45, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 50px 30px;
             border-radius: 8px;
-            transition: transform 0.3s;
+            transition: var(--transition);
+            border: 1px solid rgba(211, 47, 47, 0.1);
             border-top: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(211, 47, 47, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity var(--transition);
         }
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
             border-top: 3px solid var(--accent-color);
+            box-shadow: 0 15px 50px rgba(211, 47, 47, 0.2);
+            background: rgba(45, 45, 45, 0.8);
         }
-        .card h3 { margin-bottom: 15px; font-size: 1.4rem; }
-        .card p { color: var(--text-dim); margin-bottom: 25px; }
+        .card:hover::before { opacity: 1; }
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .card p {
+            color: var(--text-dim);
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
 
         .services-list {
             list-style: none;
@@ -186,15 +375,22 @@
             margin: 0 auto 25px auto;
             color: var(--text-dim);
             max-width: 250px;
+            position: relative;
+            z-index: 1;
         }
         .services-list li {
-            margin-bottom: 8px;
-            padding-left: 20px;
+            margin-bottom: 12px;
+            padding-left: 25px;
             position: relative;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .services-list li:hover {
+            color: var(--text-light);
+            transform: translateX(5px);
         }
         .services-list li::before {
-            content: '\f058'; /* Font Awesome checkmark */
+            content: '\f058';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             color: var(--accent-color);
@@ -205,38 +401,60 @@
 
         /* --- ABOUT US SECTION --- */
         .about-us-section {
-            padding: 80px 5%;
-            background-color: var(--primary-bg);
+            padding: 100px 5%;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .about-us-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(211, 47, 47, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
         }
         .about-us-section .section-title {
-            color: white;
+            position: relative;
+            z-index: 1;
         }
         .about-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         .about-content p {
-            color: var(--text-dim);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
+            color: #e0e0e0;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s var(--transition);
         }
 
         /* --- POLICIES SECTION --- */
         .policies-section {
             padding: 80px 5%;
-            background-color: var(--secondary-bg);
+            background: linear-gradient(135deg, rgba(0,0,0,0.5), rgba(45, 45, 45, 0.5));
+            backdrop-filter: blur(5px);
         }
         .policy-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         .policy-content {
             margin-bottom: 60px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid #444;
-            scroll-margin-top: 110px; /* Offset for sticky nav */
+            padding: 40px;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.2);
+            scroll-margin-top: 110px;
+            background: rgba(45, 45, 45, 0.3);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color);
+            animation: fadeInUp 0.8s var(--transition);
         }
         .policy-content:last-child {
             margin-bottom: 0;
@@ -246,14 +464,15 @@
             color: var(--accent-color);
             margin-bottom: 30px;
             text-align: center;
+            font-size: 2rem;
         }
         .policy-content h4 {
-            color: white;
+            color: #f4f4f4;
             margin-top: 20px;
             margin-bottom: 10px;
         }
         .policy-content p, .policy-content ul {
-            color: var(--text-dim);
+            color: #d0d0d0;
             line-height: 1.8;
         }
         .policy-content ul {
@@ -262,12 +481,15 @@
         }
         .policy-content ul li {
             margin-bottom: 10px;
+            color: #d0d0d0;
         }
 
         /* --- IMAGE BREAK SECTION --- */
         .image-break {
-            height: 40vh;
+            height: 50vh;
+            background-attachment: fixed;
             overflow: hidden;
+            position: relative;
         }
         .image-break img {
             width: 100%;
@@ -275,54 +497,147 @@
             object-fit: cover;
         }
 
-        /* --- CONTACT PAGE / SECTION --- */
-        .contact-section { 
+        /* --- CONTACT SECTION --- */
+        .contact-section {
             background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('IMG_8375-2-scaled.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            padding: 80px 5%; 
+            padding: 100px 5%;
+            position: relative;
         }
-        .contact-container { display: flex; flex-wrap: wrap; gap: 50px; }
-        .contact-info, .contact-form { 
-            flex: 1; 
-            min-width: 300px; 
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 70% 30%, rgba(211, 47, 47, 0.05), transparent 60%);
+            pointer-events: none;
         }
-        .contact-info h3 { color: var(--accent-color); margin-bottom: 20px; }
-        .info-item { margin-bottom: 30px; }
-        .info-item strong { display: block; margin-bottom: 5px; color: white; }
-        .info-item p { color: var(--text-dim); }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; }
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 60px;
+            position: relative;
+            z-index: 1;
+        }
+        .contact-info, .contact-form {
+            flex: 1;
+            min-width: 300px;
+            animation: fadeInUp 0.8s var(--transition);
+        }
+        .contact-info {
+            animation-delay: 0.1s;
+        }
+        .contact-form {
+            animation-delay: 0.2s;
+        }
+        .contact-info h3 {
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        .info-item {
+            margin-bottom: 40px;
+        }
+        .info-item strong {
+            display: block;
+            margin-bottom: 8px;
+            color: white;
+            font-size: 1.05rem;
+        }
+        .info-item p {
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: white;
+        }
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 12px;
-            background: #222;
-            border: 1px solid #444;
+            padding: 14px;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(211, 47, 47, 0.2);
             color: white;
             border-radius: 4px;
+            backdrop-filter: blur(5px);
+            transition: var(--transition);
+            font-family: inherit;
         }
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
             border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(211, 47, 47, 0.2);
+            background: rgba(30, 30, 30, 0.95);
         }
 
         /* --- FOOTER --- */
-        footer { background: #0a0a0a; padding: 60px 5% 20px; color: var(--text-dim); font-size: 0.9rem; }
+        footer {
+            background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
+            padding: 60px 5% 20px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(211, 47, 47, 0.1);
+        }
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 40px;
             margin-bottom: 40px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.1);
             padding-bottom: 40px;
         }
-        .footer-col h4 { color: white; margin-bottom: 20px; }
-        .footer-col ul li { margin-bottom: 10px; }
-        .footer-col ul li a:hover { color: var(--accent-color); }
-        .social-links { display: flex; gap: 15px; margin-top: 20px; }
-        .social-links a { font-size: 1.5rem; color: white; transition: color 0.3s ease; }
-        .social-links a:hover { color: var(--accent-color); }
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        .footer-col h4:hover { color: var(--accent-color); }
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        .footer-col ul li a {
+            transition: var(--transition);
+        }
+        .footer-col ul li a:hover {
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            font-size: 1.5rem;
+            color: white;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(211, 47, 47, 0.3);
+            border-radius: 50%;
+        }
+        .social-links a:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.2);
+        }
 
         /* Mobile Menu Styles */
         .mobile-menu-toggle {
@@ -333,16 +648,19 @@
             font-size: 1.8rem;
             cursor: pointer;
             z-index: 1001;
+            transition: var(--transition);
         }
+        .mobile-menu-toggle:hover { color: var(--accent-color); }
 
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 2.5rem; }
             .promo-banner .promo-content { text-align: center; justify-content: center; }
             .nav-logo { height: 65px; }
+            .section-title { font-size: 2rem; }
 
             /* --- Mobile Nav --- */
             .mobile-menu-toggle { display: block; }
-            .header-social-links { display: none; } /* Hide on mobile */
+            .header-social-links { display: none; }
             .nav-links {
                 display: flex;
                 flex-direction: column;
@@ -351,14 +669,16 @@
                 gap: 40px;
                 position: fixed;
                 top: 0;
-                left: 100%; /* Start off-screen */
+                left: 100%;
                 width: 100%;
                 height: 100vh;
-                background-color: #000;
-                transition: left 0.3s ease-in-out;
+                background: rgba(0, 0, 0, 0.98);
+                backdrop-filter: blur(10px);
+                transition: left var(--transition);
+                z-index: 1000;
             }
             .nav-links.active {
-                left: 0; /* Slide in */
+                left: 0;
             }
             .nav-links a {
                 font-size: 1.5rem;
@@ -372,38 +692,49 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
             z-index: 2000;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 20px;
+            animation: fadeInUp 0.6s var(--transition);
         }
         .verification-box {
-            background-color: var(--primary-bg);
-            padding: 40px;
-            border-radius: 8px;
-            border: 1px solid #444;
+            background: rgba(45, 45, 45, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 12px;
+            border: 1px solid rgba(211, 47, 47, 0.3);
             max-width: 500px;
+            box-shadow: 0 8px 50px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.8s var(--transition) 0.2s backwards;
         }
         .verification-logo {
             max-height: 80px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s var(--transition) 0.3s backwards;
         }
         .verification-box h2 {
             color: var(--accent-color);
             margin-bottom: 15px;
+            font-size: 2rem;
+            animation: fadeInUp 0.8s var(--transition) 0.4s backwards;
         }
         .verification-box p {
             color: var(--text-dim);
             margin-bottom: 30px;
-            line-height: 1.7;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s var(--transition) 0.5s backwards;
         }
         .verification-buttons {
             display: flex;
             gap: 15px;
             justify-content: center;
+            animation: fadeInUp 0.8s var(--transition) 0.6s backwards;
+            flex-wrap: wrap;
         }
     </style>
 </head>
@@ -452,7 +783,6 @@
         </section>
 
         <section class="promo-banner">
-            <!-- Added loading="lazy" for performance -->
             <img src="IMG_8441-2-scaled.png" alt="Two handguns on a dark surface" loading="lazy"> 
             
             <div class="promo-content">
@@ -478,7 +808,7 @@
                         <li>Pin and Weld Services</li>
                         <li>Barrel Threading</li>
                     </ul>
-                    <a href="#" class="btn-outline" style="padding: 8px 20px;">View Pricing</a>
+                    <a href="#" class="btn btn-outline" style="padding: 8px 20px;">View Pricing</a>
                 </div>
                 <div class="card">
                     <h3>NFA Items</h3>
@@ -498,8 +828,8 @@
         <section id="about" class="about-us-section">
             <h2 class="section-title">ABOUT US</h2>
             <div class="about-content">
-                <p>East Coast Arsenal is OPEN on 191 in Lower Nazareth! We’re bringing a new standard in firearm sales, service, and support. Whether you’re purchasing your very first firearm, expanding a well-curated collection, or looking for trusted FFL/NFA services, we’re your go-to destination.</p>
-                <p>Our modern, fully licensed facility is open to the public. We’ve designed every square foot to deliver a clean, secure, and professional experience backed by real-world knowledge. Whether you’re a weekend enthusiast, a seasoned collector, or a professional in the field, East Coast Arsenal is the place where serious firearm owners come to do business. Come see us.</p>
+                <p>East Coast Arsenal is OPEN on 191 in Lower Nazareth! We're bringing a new standard in firearm sales, service, and support. Whether you're purchasing your very first firearm, expanding a well-curated collection, or looking for trusted FFL/NFA services, we're your go-to destination.</p>
+                <p>Our modern, fully licensed facility is open to the public. We've designed every square foot to deliver a clean, secure, and professional experience backed by real-world knowledge. Whether you're a weekend enthusiast, a seasoned collector, or a professional in the field, East Coast Arsenal is the place where serious firearm owners come to do business. Come see us.</p>
             </div>
         </section>
 
@@ -549,7 +879,7 @@
                         <li>Firearms (New or used. Applies once firearm has been transferred to buyer or shipped to FFL)</li>
                         <li>Special orders</li>
                         <li>Ammunition</li>
-                        <li>“As is” or “used” (open box, no box)</li>
+                        <li>"As is" or "used" (open box, no box)</li>
                         <li>Optics, illumination devices (white light, IR), Night Vision devices, IR/VIS Laser Illuminators</li>
                         <li>Ballistic Armor (Plates, Helmets)</li>
                     </ul>
@@ -595,7 +925,7 @@
                     <p>East Coast Arsenal is a licensed firearms dealer / NFA specialist. We sell ammo, accessories, gear and more. Our website address is: https://www.EastCoast-Arsenal.com</p>
 
                     <h4>COMMENTS</h4>
-                    <p>When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor’s IP address and browser user agent string to help spam detection.</p>
+                    <p>When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor's IP address and browser user agent string to help spam detection.</p>
                     <p>An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: https://automattic.com/privacy/. After approval of your comment, your profile picture is visible to the public in the context of your comment.</p>
 
                     <h4>MEDIA</h4>
@@ -604,7 +934,7 @@
                     <h4>COOKIES</h4>
                     <p>If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.</p>
                     <p>If you visit our login page, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.</p>
-                    <p>When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select “Remember Me”, your login will persist for two weeks. If you log out of your account, the login cookies will be removed.</p>
+                    <p>When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select "Remember Me", your login will persist for two weeks. If you log out of your account, the login cookies will be removed.</p>
                     <p>If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.</p>
 
                     <h4>EMBEDDED CONTENT FROM OTHER WEBSITES</h4>
@@ -628,7 +958,7 @@
         </section>
 
         <section id="contact" class="contact-section">
-            <h2 class="section-title" style="text-align: center; color: white;">CONTACT US</h2>
+            <h2 class="section-title" style="text-align: center; color: white; position: relative; z-index: 1;">CONTACT US</h2>
             <div class="contact-container">
                 <div class="contact-info">
                     <h3>Visit The Arsenal</h3>
@@ -650,7 +980,7 @@
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3034.259232899933!2d-75.3331949236718!3d40.66847817138118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c43e00a5531731%3A0x73c5c34513c1163!2s231%20Nazareth%20Pike%2C%20Bethlehem%2C%20PA%2018020%2C%20USA!5e0!3m2!1sen!2sus!4v1678886400000!5m2!1sen!2sus" 
                         width="100%" 
                         height="250" 
-                        style="border:0; border-radius: 4px;" 
+                        style="border:0; border-radius: 4px; margin-top: 30px;" 
                         allowfullscreen="" 
                         loading="lazy" 
                         referrerpolicy="no-referrer-when-downgrade">
@@ -726,21 +1056,18 @@
                 const yesButton = document.getElementById('verify-yes');
                 const noButton = document.getElementById('verify-no');
 
-                // Check if age is already verified in this session
                 if (sessionStorage.getItem('isAgeVerified') === 'true') {
                     overlay.style.display = 'none';
                     mainContent.style.display = 'block';
                 }
 
                 yesButton.addEventListener('click', () => {
-                    // Set a session cookie and show the site
                     sessionStorage.setItem('isAgeVerified', 'true');
                     overlay.style.display = 'none';
                     mainContent.style.display = 'block';
                 });
 
                 noButton.addEventListener('click', () => {
-                    // Redirect or show a message
                     window.location.href = 'https://www.google.com';
                 });
             });
@@ -753,7 +1080,6 @@
 
             menuToggle.addEventListener('click', () => {
                 navLinks.classList.toggle('active');
-                // Toggle between bars and times (X) icon
                 if (navLinks.classList.contains('active')) {
                     icon.classList.remove('fa-bars');
                     icon.classList.add('fa-times');
@@ -763,7 +1089,6 @@
                 }
             });
 
-            // Close menu when a link is clicked
             navLinksAnchors.forEach(link => {
                 link.addEventListener('click', () => {
                     if (navLinks.classList.contains('active')) {
@@ -771,6 +1096,39 @@
                         icon.classList.remove('fa-times');
                         icon.classList.add('fa-bars');
                     }
+                });
+            });
+
+            // Scroll Animation Script
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add animation delay based on element index
+                        entry.target.style.animationDelay = '0s';
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards and policy content
+            document.querySelectorAll('.card, .policy-content, .about-content p').forEach((el, index) => {
+                // Set initial state to visible (don't hide them)
+                el.style.opacity = '1';
+                observer.observe(el);
+            });
+
+            // Parallax scroll effect
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('[data-parallax]');
+                parallaxElements.forEach(el => {
+                    el.style.transform = `translateY(${scrolled * 0.5}px)`;
                 });
             });
         </script>
