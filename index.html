@@ -1015,6 +1015,14 @@
             }
         }
     </style>
+    <!-- START Formbricks Surveys -->
+    <script type="text/javascript">
+    !function(){
+        var appUrl = "https://app.formbricks.com"; // use PUBLIC_URL if you are using multi-domain setup, otherwise use WEBAPP_URL
+        var environmentId = "cmiggtkfs82fpad01gffejfyq";
+        var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=appUrl+"/js/formbricks.umd.cjs";var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e),setTimeout(function(){window.formbricks.setup({environmentId: environmentId, appUrl: appUrl})},500)}();
+    </script>
+    <!-- END Formbricks Surveys -->
    
 </head>
 <body>
@@ -1314,7 +1322,13 @@
                 </div>
 
                 <div class="contact-form fade-in">
-                    <form action="https://formspree.io/f/xwpyrknw" method="POST">
+                    <div style="position: relative; height:80dvh; overflow:auto;"> 
+                        <iframe 
+                            src="https://app.formbricks.com/s/cmigkz9pvf26ead01wsn6dr48?embed=true" 
+                            frameborder="0" style="position: absolute; left:0; top:0; width:75%; height:60%; border:20;">
+                        </iframe>
+                    </div>
+                    <!-- <form action="https://formspree.io/f/xwpyrknw" method="POST">
                         <div class="form-group">
                             <label>Full Name</label>
                             <input type="text" name="name" placeholder="John Doe" required>
@@ -1337,7 +1351,7 @@
                             <textarea name="message" rows="5" placeholder="How can we help you gain the advantage?" required></textarea>
                         </div>
                         <button type="submit" class="btn" style="width: 100%;">Send Message</button>
-                    </form>
+                    </form> -->
                 </div>
             </div>
         </section>
