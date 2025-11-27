@@ -213,15 +213,24 @@
             justify-content: center;
             text-align: center;
             overflow: hidden;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(10, 10, 10, 0.8) 100%),
-                        url('guns_logo.jpg') center/cover no-repeat;
+            background-image: url('gunslogo.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
         }
 
         @media (max-width: 968px) {
             .hero {
                 height: 80vh;
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(10, 10, 10, 0.8) 100%),
-                            url('GUNS.png') center/cover no-repeat;
+                background-size: cover;
+                background-position: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                height: 60vh;
             }
         }
 
@@ -1070,13 +1079,8 @@
 
         <!-- Hero Section -->
         <section id="home" class="hero">
-            <!-- <div class="hero-content">
-                <h1>GAIN THE ADVANTAGE</h1>
-                <p>East Coast Arsenal | New & Used Guns • FFL Services • NFA Items</p>
-                <a href="services.html#services" class="btn">View Services</a>
-                <a href="#contact" class="btn btn-outline">Contact Us</a>
-            </div> -->
-            <div class="scroll-indicator">↓</div>
+            <div class="hero-content">
+            </div>
         </section>
         <!-- About Section (MOVED HERE) -->
         <section id="about" class="about-us-section">
